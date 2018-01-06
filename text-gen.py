@@ -34,7 +34,7 @@ if __name__ == "__main__":
 
   while True:
     print("\033[39m")
-    cmd = raw_input("\033[35mEnter one of the following (train | sample) > ")
+    cmd = input("\033[35mEnter one of the following (train | sample) > ")
     print("\033[39m")
     if cmd == "train":
       print("Training LSTM")

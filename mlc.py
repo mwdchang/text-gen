@@ -12,7 +12,7 @@ import sys
 
 def normalize(counter):
   s = float(sum(counter.values()))
-  return [(c,cnt/s) for c,cnt in counter.iteritems()]
+  return [(c,cnt/s) for c,cnt in counter.items()]
 
 
 class MLC():
@@ -20,31 +20,31 @@ class MLC():
     self.order = order
 
   def train_fulltext(self, fname):
-    data = file(fname).read()
+    data = open(fname).read()
     lm = defaultdict(Counter)
     pad = "~" * self.order
     data = pad + data 
-    for i in xrange(len(data) - self.order):
+    for i in range(len(data) - self.order):
       history, char = data[i: i + self.order], data[i + self.order]
       lm[history][char]+=1
-    outlm = {hist:normalize(chars) for hist, chars in lm.iteritems()}
+    outlm = {hist:normalize(chars) for hist, chars in lm.items()}
     # print("Model size > " + str(len(outlm)))
     self.lm = outlm
 
 
   def train_lines(self, fname):
-    data = file(fname).read()
+    data = open(fname).read()
     lm = defaultdict(Counter)
     pad = "~" * self.order
 
     sentences = data.split('\n')
     for sent in sentences:
       sent = pad + sent
-      for i in xrange(len(sent) - self.order):
+      for i in range(len(sent) - self.order):
         history, char = sent[i: i + self.order], sent[i + self.order]
         lm[history][char]+=1
 
-    outlm = {hist:normalize(chars) for hist, chars in lm.iteritems()}
+    outlm = {hist:normalize(chars) for hist, chars in lm.items()}
     # print("Model size > " + str(len(outlm)))
     self.lm = outlm
 
@@ -70,7 +70,7 @@ class MLC():
     start = history
 
     out = []
-    for i in xrange(nletters):
+    for i in range(nletters):
       c = self.generate_letter(history) 
       if c is None:
         break
